@@ -1,0 +1,11 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: m2aJc7BVV4aWBNUd7j8jdjM+B8Y2i7UqdDtaejQo9PjcLl8DWeXzFRvL3pzOvJ5XKSGu3eAtb9UibtWdH2FQLey8unXGuVvQ5PHmVm3PfgZPZr43JVuEQ2VzUar8iSyEpuF4KXrgedpr80lKbiOFcL0RdWIvE59dDnaQfrhm+S2BiWTWRzkBquLM+yO6yKMxzhrA9WSUxBNtcL24KTeV2EHcrCG0xEX9u/ExITgslFD6hcS9etBfX5cqfEA0YHwHVcbnWl+Afz3rTGFIMEMBoHkv24U5Lgyq6LslREgEMT2xQWqR0CvR1MN4ABACgjOqoNm05Ztep92ECIANZ27ylhesAUexTU7PAMlf3uBKSWx+C1DFwKoFdw9erx7mgBOp/kpLDPqoVtk/hA/XxXzp6dHiWD5ivrIP0CrQd2BV7t25zuDXXsf2u38ccDl9UKwNESxn4J7B+pNRmR7DmXYD8yFzHhsfLUFy6hbOCL9vm/rM4DSGckuwv1E8jIPpYTrMNE1BtEQmG92MKndcYc31858dQp5VhhwC+HT0KomqaaUoadDbaa5YVOk8yGYDeA1xoAne64Qa4PtBoGOfv9ETis+se+sr4ePGkoumO8JTeWu3klmYIzh8MDPX5hgSp4j8ge+sevReF/ZPheVh1SP07dXmXXh9UZhUK9HGciPNiVI=
+  app: warm-hamlet-65994
+  on:
+    repo: lakerfan1994/basketball-concordance-api
