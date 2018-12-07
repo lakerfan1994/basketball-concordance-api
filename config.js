@@ -1,0 +1,1 @@
+exports.DATABASE_URL = process.env.CLIENT_ORIGIN || "https://infinite-taiga-42293.herokuapp.com/";

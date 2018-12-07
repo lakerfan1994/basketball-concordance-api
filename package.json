@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "test": "mocha --exit",
+    "test": "mocha --exit",
     "start": "node server.js"
   },
   "author": "",
@@ -13,6 +13,7 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "mocha": "^5.2.0",
     "mongoose": "^5.3.14"
