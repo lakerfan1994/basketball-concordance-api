@@ -1,20 +1,71 @@
- const express = require('express');
- const app = express();
+const express = require('express');
+const app = express();
+const morgan = require('morgan');
+const mongoose = require('mongoose')
 const cors = require('cors');
-const {CLIENT_ORIGIN} = require('./config');
- const PORT = process.env.PORT || 3000;
+const {DATABASE_URL, CLIENT_ORIGIN} = require('./config');
+const userRouter = require('./routers/user-router');
+const authRouter = require('./routers/auth-router');
+const pageRouter = require('./routers/page-router');
+ const {PORT} = require('./config');
 
 app.use(
     cors({
         origin: CLIENT_ORIGIN
     })
 );
+app.use(morgan('common'));
+mongoose.Promise = global.Promise;
+app.use('/users', userRouter);
+app.use('/auth', authRouter);
+app.use('/pages', pageRouter);
+
 
 
  app.get('/api/*', (req, res) => {
    res.json({ok: true});
  });
 
- app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+//connects to the database, and starts the server
+function runServer(databaseUrl, port =PORT) {
+  return new Promise((resolve, reject) => {
+    mongoose.connect(
+      databaseUrl,
+      err => {
+        if(err) {
+          return reject(err);
+        }
+        server = app
+        .listen(port, () => {
+          resolve();
+        })
+        .on("error", err => {
+          mongoose.disconnect();
+          reject(err);
+        });
+      }
+    );
+  })
+};
 
- module.exports = {app};
+//disconnects from the database and closes the server
+function closeServer() {
+  return mongoose.disconnect().then(() => {
+    return new Promise((resolve, reject) => {
+      server.close(err => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+  });
+};
+
+//clever!!! this basically allows for the app to run and use the DATABASE url if and only if the app is run from the server,
+//and not from somewhere else
+if (require.main === module) {
+  runServer(DATABASE_URL).catch(err => console.log(err));
+};
+
+ module.exports = {app, runServer, closeServer};
