@@ -14,7 +14,6 @@ const userSchema = mongoose.Schema({
 const pageSchema = mongoose.Schema({
 	title: {type: String, required: true},
 	summary: {type: String, required: true},
-	searchQueries: [String],
 	sections: [{
 		title: String,
 		text: String

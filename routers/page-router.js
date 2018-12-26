@@ -5,11 +5,12 @@ const jsonParser = express.json();
 
 //Validates then creates a new page
 pageRouter.post('/', jsonParser, (req, res) => {
-  const neededKeys = ["title", "summary", "searchQueries", "sections"];
+  console.log(req.body);
+  const neededKeys = ["title", "summary", "sections"];
   for(let i = 0; i < neededKeys.length; i++) {
     let key = neededKeys[i];
     if(!(key in req.body)) {
-      res.send(`Error, ${key} is not in the request body`);
+      res.status(400).send(`Error, ${key} is not in the request body`);
     }
   }
 
@@ -18,7 +19,7 @@ pageRouter.post('/', jsonParser, (req, res) => {
     Page.findOne({title: req.body.title})
     .then(page => {
       if(!page) {
-      	const newPage = {title: req.body.title, summary: req.body.summary, searchQueries: req.body.searchQueries,
+      	const newPage = {title: req.body.title, summary: req.body.summary,
          sections: req.body.sections
       	}
 
@@ -39,17 +40,18 @@ pageRouter.post('/', jsonParser, (req, res) => {
 //After validation, returns the page at the given address
 pageRouter.get('/:title', (req, res) => {
   const requiredKey = "title";
-  
   if(!(requiredKey in req.params)) {
     res.status(401).send("Error: Title not included in the request parameter");
   };
   
   Page.findOne({title: req.params.title})
   .then(_page => {
+    console.log('is it making it here?')
      res.status(200).json(_page.serialize()); 
   })
   .catch(err => {
-    res.status(400).send("No page found at this address");
+    const emptyPage = {title: req.params.title, summary: '', sections: [{title: '', text: ''}, {title: '', text: ''}, {title: '', text: ''}]}
+    res.status(400).send(emptyPage);
   })
 })
 
