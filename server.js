@@ -10,7 +10,7 @@ const pageRouter = require('./routers/page-router');
  const {PORT} = require('./config');
 
 app.use(
-    cors({origin:CLIENT_ORIGIN})
+    cors()
 );
 app.use(morgan('common'));
 mongoose.Promise = global.Promise;
